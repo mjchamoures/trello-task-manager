@@ -53,7 +53,9 @@ class TaskManager extends React.Component {
           <StatusPanel 
             tasks={tasks} 
             title={this.props.statusPanels[i].title}
+            statusId={this.props.statusPanels[i].statusId}
             key={this.props.statusPanels[i].statusId}
+            addTaskClickHandler={(statusId) => this.addTaskClickHandler(statusId)}
           />
         </Col>
 
@@ -75,9 +77,17 @@ class TaskManager extends React.Component {
   }
 
 
-  addTaskClickHandler() {
-
-
+  addTaskClickHandler(statusId) {
+    console.log("add status: " + statusId);
+    var newTask = {
+      title: "test",
+      description : "description",
+      statusId : statusId
+    };
+    this.taskManagerService.addTask(newTask);
+    this.setState({
+      tasks: this.taskManagerService.getAllTasks()
+    });
 
   }
 

@@ -74,7 +74,7 @@ class TaskManagerService {
     ];
 
 
-    return tasks;
+    return this.tasks;
 
   }
 

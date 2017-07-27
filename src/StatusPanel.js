@@ -2,7 +2,7 @@
 
 
 import React from 'react';
-import { Row, Col, Panel } from 'react-bootstrap';
+import { Row, Col, Panel, Button } from 'react-bootstrap';
 import TaskCard from './TaskCard.js';
 
 
@@ -37,8 +37,12 @@ class StatusPanel extends React.Component {
     return (
 
       <Panel style={{"background" : "#f5f5f5"}}>
+        
         {statusTitle}
+        
         {taskCards}
+
+        <Button bsSize="small" onClick={() => { this.props.addTaskClickHandler(this.props.statusId) } }>Add Task</Button>
       </Panel>
 
     );
