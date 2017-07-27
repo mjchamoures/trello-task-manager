@@ -7,9 +7,6 @@ import StatusPanel from './StatusPanel.js';
 import TaskManagerService from './TaskManagerService.js';
 
 
-
-
-
 class TaskManager extends React.Component {
 
 
@@ -36,6 +33,8 @@ class TaskManager extends React.Component {
       tasks : tasks
     };
 
+    this.saveTaskClickHandler = this.saveTaskClickHandler.bind(this);
+
   }
 
   render() {
@@ -55,7 +54,7 @@ class TaskManager extends React.Component {
             title={this.props.statusPanels[i].title}
             statusId={this.props.statusPanels[i].statusId}
             key={this.props.statusPanels[i].statusId}
-            addTaskClickHandler={(statusId) => this.addTaskClickHandler(statusId)}
+            saveTaskClickHandler={(task) => this.saveTaskClickHandler(task)}
           />
         </Col>
 
@@ -71,24 +70,17 @@ class TaskManager extends React.Component {
         {statusPanels}
 
       </Row>
-
     );
 
   }
 
+  saveTaskClickHandler(task) {
 
-  addTaskClickHandler(statusId) {
-    console.log("add status: " + statusId);
-    var newTask = {
-      title: "test",
-      description : "description",
-      statusId : statusId
-    };
-    this.taskManagerService.addTask(newTask);
+    this.taskManagerService.addTask(task);
+
     this.setState({
       tasks: this.taskManagerService.getAllTasks()
     });
-
   }
 
   updateTaskDragDropHandler() {
