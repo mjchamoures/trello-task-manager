@@ -11,7 +11,5 @@ naviagte to localhost:3000/
 // TODO 7/26:
 - Add JQuery UI sortable (https://jqueryui.com/sortable/#connect-lists)
 - Add timestamp to TaskCard
-- Add date during Add service
-- Add remove button to TaskCard
-- Add remove functionality connecting taskcard -> statusPanel -> taskmanager
+- Add date during Add/Update service
 - Add navbar

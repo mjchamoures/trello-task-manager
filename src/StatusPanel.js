@@ -14,12 +14,15 @@ class StatusPanel extends React.Component {
     super(props);
 
     this.state = {
-      showModal : false
+      showModal : false,
+      currentTask : {},
+      actionType : ""
     };
 
     this.saveTaskClickHandler = this.saveTaskClickHandler.bind(this);
+    this.editTaskClickHandler = this.editTaskClickHandler.bind(this);
+    this.addTaskClickHandler = this.addTaskClickHandler.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.openModal = this.openModal.bind(this);
   }
 
   render() {
@@ -35,7 +38,7 @@ class StatusPanel extends React.Component {
           updatedAt={this.props.tasks[i].updatedAt}
           key={this.props.tasks[i].taskId} 
           removeTaskClickHandler={(taskId) => this.props.removeTaskClickHandler(taskId)}
-          editTaskClickHandler={() => this.editTaskClickHandler()}
+          editTaskClickHandler={(task) => this.editTaskClickHandler(task)}
         />
       );
       taskCards.push(taskCard);
@@ -51,13 +54,14 @@ class StatusPanel extends React.Component {
           
           {taskCards}
 
-          <Button bsSize="small" onClick={this.openModal}>Add Task</Button>
+          <Button bsSize="small" onClick={this.addTaskClickHandler}>Add Task</Button>
         </Panel>
 
         <Modal show={this.state.showModal} onHide={this.closeModal}>
           <AddEditTaskCard 
             saveTaskClickHandler={this.saveTaskClickHandler}
-            type="create"
+            type={this.state.actionType}
+            task={this.state.currentTask}
             closeModal={this.closeModal}
           />
         </Modal>
@@ -66,21 +70,34 @@ class StatusPanel extends React.Component {
 
   }
 
-  openModal() {
+  addTaskClickHandler() {
     this.setState({
-      showModal : true
+      showModal : true,
+      currentTask : {"title" : "", "description" : ""},
+      actionType : "create"
     });
+  }
+
+  editTaskClickHandler(task) {
+
+    this.setState({
+      showModal : true,
+      currentTask : {taskId : task.taskId, title : task.title, description : task.description},
+      actionType : "update"
+    });
+
   }
 
   closeModal() {
     this.setState({
-      showModal : false
+      showModal : false,
+      currentTask : {"title" : "", "description" : ""}
     });
   }
 
   saveTaskClickHandler(task) {
     var task = {
-      title : task.name,
+      title : task.title,
       description : task.description,
       statusId : this.props.statusId,
       taskId : task.taskId

@@ -12,6 +12,7 @@ class TaskCard extends React.Component {
   constructor(props) {
 
     super(props);
+    this.editTaskClickHandler = this.editTaskClickHandler.bind(this);
 
   }
 
@@ -32,7 +33,7 @@ class TaskCard extends React.Component {
           <span 
             className={"glyphicon glyphicon-pencil small"} 
             style={{"cursor" : "pointer", "marginLeft": "5px"}}
-            onClick={this.testFunc}>
+            onClick={this.editTaskClickHandler}>
           </span>
         </h4>
 
@@ -43,9 +44,16 @@ class TaskCard extends React.Component {
 
   }
 
-  testFunc() {
+  editTaskClickHandler() {
 
-    console.log("Dd");
+    var currentTask = {
+      taskId : this.props.taskId,
+      title : this.props.title,
+      description : this.props.description
+    };
+
+    this.props.editTaskClickHandler(currentTask);
+
   }
 
 

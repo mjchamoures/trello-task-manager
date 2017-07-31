@@ -77,8 +77,10 @@ class TaskManager extends React.Component {
   }
 
   saveTaskClickHandler(task) {
+    var newTasks = [];
 
-    var newTasks = this.taskManagerService.addTask(task);
+    // if task already exists, call update service, else call add service
+    newTasks = typeof task.taskId !== "undefined" ? this.taskManagerService.updateTask(task) : this.taskManagerService.addTask(task);
 
     this.setState({
       tasks: newTasks
