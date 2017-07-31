@@ -9,5 +9,5 @@ naviagte to localhost:3000/
 
 
 // TODO 7/26:
-- Add JQuery UI sortable (https://jqueryui.com/sortable/#connect-lists)
+- reordering of tasks within a status panel...right now just sorting by updatedAt ASC
 - Add navbar

@@ -5,6 +5,7 @@ import React from 'react';
 import { Row, Col, Panel, Button, Modal } from 'react-bootstrap';
 import TaskCard from './TaskCard.js';
 import AddEditTaskCard from './AddEditTaskCard.js';
+import { DropTarget } from 'react-dnd';
 
 
 class StatusPanel extends React.Component {
@@ -23,6 +24,7 @@ class StatusPanel extends React.Component {
     this.editTaskClickHandler = this.editTaskClickHandler.bind(this);
     this.addTaskClickHandler = this.addTaskClickHandler.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.moveTask = this.moveTask.bind(this);
   }
 
   render() {
@@ -32,21 +34,21 @@ class StatusPanel extends React.Component {
     for(var i = 0; i < this.props.tasks.length; i++) {
       var taskCard = (
         <TaskCard
-          taskId={this.props.tasks[i].taskId} 
-          title={this.props.tasks[i].title}
-          description={this.props.tasks[i].description}
-          updatedAt={this.props.tasks[i].updatedAt}
+          index={i}
+          task={this.props.tasks[i]}
           key={this.props.tasks[i].taskId} 
           removeTaskClickHandler={(taskId) => this.props.removeTaskClickHandler(taskId)}
           editTaskClickHandler={(task) => this.editTaskClickHandler(task)}
+          moveTask={this.moveTask}
         />
       );
       taskCards.push(taskCard);
     };
 
     var statusTitle = (<h4 style={{"fontWeight" : "bold"}}>{this.props.title}</h4>)
+    const { canDrop, isOver, connectDropTarget } = this.props;
 
-    return (
+    return connectDropTarget(
       <div>
         <Panel style={{"background" : "#f5f5f5"}}>
           
@@ -107,11 +109,37 @@ class StatusPanel extends React.Component {
     this.closeModal();
   }
 
+  moveTask(dragTask, hoverIndex) {
+    // var dragTask = this.props.tasks[dragIndex];
+    dragTask.statusId = hoverIndex;
 
+    this.props.saveTaskClickHandler(dragTask);
+
+  }
 
 
 };
 
+const taskTarget = {
+  drop(props, monitor, component ) {
+    const { statusId } = props;
+    const sourceObj = monitor.getItem();    
+    if ( statusId !== sourceObj.statusId ) component.moveTask(sourceObj.task, statusId);
+    return {
+      statusId: statusId
+    };
+  }
+}
 
-export default StatusPanel;
+export default DropTarget("TASKCARD", taskTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop()
+}))(StatusPanel);
+
+
+
+
+
+
 

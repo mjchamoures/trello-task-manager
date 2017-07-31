@@ -107,7 +107,7 @@ class TaskManagerService {
       }
     }
 
-    return this.tasks;
+    return this.tasks.sort((a,b) => a.updatedAt > b.updatedAt);
 
   }
 

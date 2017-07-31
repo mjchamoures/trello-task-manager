@@ -5,7 +5,8 @@ import React from 'react';
 import { Row, Col, Panel } from 'react-bootstrap';
 import StatusPanel from './StatusPanel.js';
 import TaskManagerService from './TaskManagerService.js';
-
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 class TaskManager extends React.Component {
 
@@ -111,6 +112,5 @@ class TaskManager extends React.Component {
 
 };
 
-
-export default TaskManager;
+export default DragDropContext(HTML5Backend)(TaskManager);
 
