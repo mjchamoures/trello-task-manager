@@ -7,6 +7,8 @@
 
 import React, { Component } from 'react';
 import TaskManager from './TaskManager.js';
+import TaskManagerNavbar from './TaskManagerNavbar.js';
+
 
 class App extends Component {
   render() {
@@ -32,7 +34,8 @@ class App extends Component {
     return (
       <div >
         <div className='container' style={{ width : '100%'}}>
-          <div style={{"paddingTop": "4rem"}}>
+          <div style={{"paddingTop": "1rem"}}>
+            <TaskManagerNavbar />
             <TaskManager 
               taskPanels={taskPanels}
               projectId={projectId}

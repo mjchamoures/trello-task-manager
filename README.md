@@ -8,6 +8,5 @@ naviagte to localhost:3000/
 -MC
 
 
-// TODO 7/26:
+// Enhancements TODO: 7/31:
 - reordering of tasks within a status panel...right now just sorting by updatedAt ASC
-- Add navbar
