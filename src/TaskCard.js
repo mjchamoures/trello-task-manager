@@ -1,14 +1,14 @@
-// component for a task card that is a child of a StatusPanel comp
-
+/* component for a task card that is a child of a TaskPanel comp
+ * 
+ * Author : Michael Chamoures
+ * Date : 7/31/17
+ *
+ */ 
 
 import React from 'react';
-import { Col, Row, Panel, Form, ControlLabel } from 'react-bootstrap';
-import { findDOMNode } from 'react-dom';
+import { Panel } from 'react-bootstrap';
 import { DragSource, DropTarget } from 'react-dnd';
 import flow from 'lodash/flow';
-
-
-
 
 class TaskCard extends React.Component {
 
@@ -22,7 +22,7 @@ class TaskCard extends React.Component {
 
   render() {
 
-    const { card, isDragging, connectDragSource, connectDropTarget } = this.props;
+    const { connectDragSource, connectDropTarget } = this.props;
 
     return connectDragSource(connectDropTarget(
       <div>
@@ -56,7 +56,6 @@ class TaskCard extends React.Component {
   }
 
   editTaskClickHandler() {
-
     var currentTask = {
       taskId : this.props.task.taskId,
       title : this.props.task.title,
@@ -67,82 +66,24 @@ class TaskCard extends React.Component {
 
   }
 
-
-
 }
 
 const taskSource = {
-
   beginDrag(props) {    
     return {      
       index: props.index,
-      statusId: props.task.statusId,
+      panelId: props.task.panelId,
       task: props.task
     };
   },
 
   endDrag(props, monitor) {
-    const item = monitor.getItem();
-    const dropResult = monitor.getDropResult(); 
-
-    // if ( dropResult && dropResult.statusId !== item.listId ) {
-    //   props.removeCard(item.index);
-    // }
+    // nothing for now
   }
 };
 
 
-
-const taskTarget = {
-
-  hover(props, monitor, component) {
-    const dragIndex = monitor.getItem().index;
-    const hoverIndex = props.index;
-    const sourceListId = monitor.getItem().statusId;  
-
-    // Don't replace items with themselves
-    // if (dragIndex === hoverIndex) {
-    //   return;
-    // }
-
-    // Determine rectangle on screen
-    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
-
-    // Get vertical middle
-    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
-    // Determine mouse position
-    const clientOffset = monitor.getClientOffset();
-
-    // Get pixels to the top
-    const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-
-    // Only perform the move when the mouse has crossed half of the items height
-    // When dragging downwards, only move when the cursor is below 50%
-    // When dragging upwards, only move when the cursor is above 50%
-
-    // Dragging downwards
-    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-      return;
-    }
-
-    // Dragging upwards
-    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-      return;
-    }
-
-    // Time to actually perform the action
-    if ( props.statusId === sourceListId ) {
-      props.moveTask(dragIndex, hoverIndex);
-
-      // Note: we're mutating the monitor item here!
-      // Generally it's better to avoid mutations,
-      // but it's good here for the sake of performance
-      // to avoid expensive index searches.
-      monitor.getItem().index = hoverIndex;
-    }   
-  }
-};
+const taskTarget = {};
 
 export default flow(
   DropTarget("TASKCARD", taskTarget, connect => ({

@@ -1,14 +1,19 @@
-// generic status panel
-
+/* generic status panel that contains a list of Task Cards
+ * 
+ * Author : Michael Chamoures
+ * Date : 7/31/17
+ *
+ * NOTE: Used https://github.com/rafaelquintanilha/experiments/tree/master/sortable-target as example for dragNDrop
+ */ 
 
 import React from 'react';
-import { Row, Col, Panel, Button, Modal } from 'react-bootstrap';
+import { Panel, Button, Modal } from 'react-bootstrap';
 import TaskCard from './TaskCard.js';
-import AddEditTaskCard from './AddEditTaskCard.js';
+import TaskCardAddEditModal from './TaskCardAddEditModal.js';
 import { DropTarget } from 'react-dnd';
 
 
-class StatusPanel extends React.Component {
+class TaskPanel extends React.Component {
 
 
   constructor(props) {
@@ -45,14 +50,13 @@ class StatusPanel extends React.Component {
       taskCards.push(taskCard);
     };
 
-    var statusTitle = (<h4 style={{"fontWeight" : "bold"}}>{this.props.title}</h4>)
-    const { canDrop, isOver, connectDropTarget } = this.props;
+    const { connectDropTarget } = this.props;
 
     return connectDropTarget(
       <div>
         <Panel style={{"background" : "#f5f5f5"}}>
           
-          {statusTitle}
+          <h4 style={{"fontWeight" : "bold"}}>{this.props.title}</h4>
           
           {taskCards}
 
@@ -60,7 +64,7 @@ class StatusPanel extends React.Component {
         </Panel>
 
         <Modal show={this.state.showModal} onHide={this.closeModal}>
-          <AddEditTaskCard 
+          <TaskCardAddEditModal 
             saveTaskClickHandler={this.saveTaskClickHandler}
             type={this.state.actionType}
             task={this.state.currentTask}
@@ -98,23 +102,20 @@ class StatusPanel extends React.Component {
   }
 
   saveTaskClickHandler(task) {
-    var task = {
+    var newTask = {
       title : task.title,
       description : task.description,
-      statusId : this.props.statusId,
+      panelId : this.props.panelId,
       taskId : task.taskId
     };
 
-    this.props.saveTaskClickHandler(task);
+    this.props.saveTaskClickHandler(newTask);
     this.closeModal();
   }
 
   moveTask(dragTask, hoverIndex) {
-    // var dragTask = this.props.tasks[dragIndex];
-    dragTask.statusId = hoverIndex;
-
+    dragTask.panelId = hoverIndex;
     this.props.saveTaskClickHandler(dragTask);
-
   }
 
 
@@ -122,11 +123,11 @@ class StatusPanel extends React.Component {
 
 const taskTarget = {
   drop(props, monitor, component ) {
-    const { statusId } = props;
+    const { panelId } = props;
     const sourceObj = monitor.getItem();    
-    if ( statusId !== sourceObj.statusId ) component.moveTask(sourceObj.task, statusId);
+    if ( panelId !== sourceObj.panelId ) component.moveTask(sourceObj.task, panelId);
     return {
-      statusId: statusId
+      panelId: panelId
     };
   }
 }
@@ -135,7 +136,7 @@ export default DropTarget("TASKCARD", taskTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop()
-}))(StatusPanel);
+}))(TaskPanel);
 
 
 

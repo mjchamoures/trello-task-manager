@@ -2,7 +2,7 @@
 
 
 import React from 'react';
-import { Col, Row, Panel, Form, Modal, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Modal, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 
 function FieldGroup({ id, label, help, ...props }) {
@@ -15,7 +15,7 @@ function FieldGroup({ id, label, help, ...props }) {
 }
 
 
-class AddEditTaskCard extends React.Component {
+class TaskCardAddEditModal extends React.Component {
 
 
   constructor(props) {
@@ -99,4 +99,4 @@ class AddEditTaskCard extends React.Component {
 
 }
 
-export default AddEditTaskCard;
+export default TaskCardAddEditModal;

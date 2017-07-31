@@ -1,9 +1,13 @@
-// Task Manager
-
+/* component managing tasks across status panels...calls service, etc.
+ * 
+ * Author : Michael Chamoures
+ * Date : 7/31/17
+ *
+ */ 
 
 import React from 'react';
-import { Row, Col, Panel } from 'react-bootstrap';
-import StatusPanel from './StatusPanel.js';
+import { Row, Col } from 'react-bootstrap';
+import TaskPanel from './TaskPanel.js';
 import TaskManagerService from './TaskManagerService.js';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -14,22 +18,10 @@ class TaskManager extends React.Component {
   constructor(props) {
     super(props);
 
-    // based on this.props.projectId, fetch list of tasks
-    // ex task structure would be:
-    /*
-
-      {
-        taskId : 0,
-        title : "Build View",
-        description : "Need to build the View component for a task",
-        statusId : 0,// maps to which status panel it belongs in 
-        createdAt : "7/26/17"
-        updatedAt : "7/27/17"
-      }
-
-    */
     this.taskManagerService = new TaskManagerService();
+    
     var tasks = this.taskManagerService.getAllTasks();
+
     this.state = {
       tasks : tasks
     };
@@ -41,21 +33,33 @@ class TaskManager extends React.Component {
 
   render() {
 
-    var statusPanels = [];
+    var taskPanels = [];
 
-    for(var i = 0; i < this.props.statusPanels.length; i++) {
-      var tasks = this.state.tasks.filter((task) => {
-        return task.statusId === this.props.statusPanels[i].statusId;
-      });
+    /* Group tasks by their panelId (status) */
+    var taskMap = {};
+    this.state.tasks.forEach((task) => {
+        const panelId = task.panelId;
+        if (panelId in taskMap) {
+          taskMap[panelId].push(task);
+        } else {
+          taskMap[panelId] = [task];  
+        }
+    });
 
-      var statusPanel = (
+    /* Build TaskPanel component for all panels defined by App.js */
+    for(var i = 0; i < this.props.taskPanels.length; i++) {
+      /* Filter out tasks specific to current taskPanel */
+      var tasks = taskMap[this.props.taskPanels[i].panelId] || [];
 
-        <Col xs={12} sm={4}>
-          <StatusPanel 
+      /* Build TaskPanel dom object */
+      var taskPanel = (
+
+        <Col xs={12} sm={4} key={i}>
+          <TaskPanel 
             tasks={tasks} 
-            title={this.props.statusPanels[i].title}
-            statusId={this.props.statusPanels[i].statusId}
-            key={this.props.statusPanels[i].statusId}
+            title={this.props.taskPanels[i].title}
+            panelId={this.props.taskPanels[i].panelId}
+            key={this.props.taskPanels[i].panelId}
             saveTaskClickHandler={(task) => this.saveTaskClickHandler(task)}
             removeTaskClickHandler={this.removeTaskClickHandler}
           />
@@ -63,20 +67,22 @@ class TaskManager extends React.Component {
 
       );
 
-      statusPanels.push(statusPanel);
+      /* Add current component to the list */
+      taskPanels.push(taskPanel);
     }
 
     return (
 
       <Row>
 
-        {statusPanels}
+        {taskPanels}
 
       </Row>
     );
 
   }
 
+  /* Called from save of TaskCardAddEditModal, or when a task is moved beween panels */
   saveTaskClickHandler(task) {
     var newTasks = [];
 
@@ -88,15 +94,7 @@ class TaskManager extends React.Component {
     });
   }
 
-  updateTaskDragDropHandler(task) {
-    var newTasks = this.taskManagerService.addTask(task);
-
-    this.setState({
-      tasks: newTasks
-    });
-
-  }
-
+  /* Called when 'x' remove option is clicked from a TaskCard component */
   removeTaskClickHandler(taskId) {
     var newTasks = this.taskManagerService.removeTask(taskId);
 
@@ -104,11 +102,6 @@ class TaskManager extends React.Component {
       tasks: newTasks
     });
   }
-
-
-
-
-
 
 };
 

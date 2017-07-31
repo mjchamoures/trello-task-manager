@@ -1,6 +1,9 @@
-// service file for all task related requests
-// for now just mocking REST calls
-
+/* service file for all task related requests....for now just mocking REST calls
+ * 
+ * Author : Michael Chamoures
+ * Date : 7/31/17
+ *
+ */ 
 
 class TaskManagerService {
 
@@ -13,67 +16,6 @@ class TaskManagerService {
 
   getAllTasks() {
 
-    // var tasks = [
-    //   {
-    //     taskId : 0,
-    //     title : "task 0",
-    //     description : "Need to build the View component for a task",
-    //     statusId : 0,// maps to which status panel it belongs in 
-    //     createdAt : "7/26/17",
-    //     updatedAt : "7/27/17"
-    //   },
-    //   {
-    //     taskId : 1,
-    //     title : "task 1",
-    //     description : "Need to build the View component for a task",
-    //     statusId : 0,// maps to which status panel it belongs in 
-    //     createdAt : "7/26/17",
-    //     updatedAt : "7/27/17"
-    //   },
-    //   {
-    //     taskId : 2,
-    //     title : "task 2",
-    //     description : "Need to build the View component for a task",
-    //     statusId : 1,// maps to which status panel it belongs in 
-    //     createdAt : "7/26/17",
-    //     updatedAt : "7/27/17"
-    //   },
-    //   {
-    //     taskId : 3,
-    //     title : "task 3",
-    //     description : "Need to build the View component for a task",
-    //     statusId : 1,// maps to which status panel it belongs in 
-    //     createdAt : "7/26/17",
-    //     updatedAt : "7/27/17"
-    //   },
-    //   {
-    //     taskId : 4,
-    //     title : "task 4",
-    //     description : "Need to build the View component for a task",
-    //     statusId : 2,// maps to which status panel it belongs in 
-    //     createdAt : "7/26/17",
-    //     updatedAt : "7/27/17"
-    //   },
-    //   {
-    //     taskId : 5,
-    //     title : "task 5",
-    //     description : "Need to build the View component for a task",
-    //     statusId : 2,// maps to which status panel it belongs in 
-    //     createdAt : "7/26/17",
-    //     updatedAt : "7/27/17"
-    //   },
-    //   {
-    //     taskId : 6,
-    //     title : "task 6",
-    //     description : "Need to build the View component for a task",
-    //     statusId : 1,// maps to which status panel it belongs in 
-    //     createdAt : "7/26/17",
-    //     updatedAt : "7/27/17"
-    //   }
-
-    // ];
-
-
     return this.tasks;
 
   }
@@ -84,11 +26,10 @@ class TaskManagerService {
       taskId : this.idSequence++,
       title : task.title,
       description : task.description,
-      statusId : task.statusId,
+      panelId : task.panelId,
       createdAt : createdAt,
       updatedAt : createdAt
-
-    }
+    };
 
     this.tasks.push(newTask);
 

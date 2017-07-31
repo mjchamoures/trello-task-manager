@@ -1,23 +1,29 @@
+/* App.js - Main Project file
+ * 
+ * Author : Michael Chamoures
+ * Date : 7/31/17
+ */ 
+
+
 import React, { Component } from 'react';
 import TaskManager from './TaskManager.js';
-import './App.css';
 
 class App extends Component {
   render() {
 
-    var statusPanels = [
+    var taskPanels = [
       {
         id : 0,
         title : "To Do",
-        statusId : 0
+        panelId : 0
       },{
         id : 1,
         title : "In Progress",
-        statusId : 1
+        panelId : 1
       },{
         id : 2,
         title : "Done",
-        statusId : 2
+        panelId : 2
       }
     ];
 
@@ -28,7 +34,7 @@ class App extends Component {
         <div className='container' style={{ width : '100%'}}>
           <div style={{"paddingTop": "4rem"}}>
             <TaskManager 
-              statusPanels={statusPanels}
+              taskPanels={taskPanels}
               projectId={projectId}
             />
           </div>
