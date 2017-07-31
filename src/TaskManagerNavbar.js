@@ -1,10 +1,5 @@
 import React from 'react';
 
-
-
-
-
-
 class TaskManagerNavbar extends React.Component {
 
   constructor(props) {

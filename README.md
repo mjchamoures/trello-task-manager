@@ -1,11 +1,12 @@
-Steps:
+Steps to Run:
 
-git clone
-cd trello-task-manager
-npm install
-npm start
-naviagte to localhost:3000/
--MC
+1. git clone
+2. cd trello-task-manager
+3. If node.js is not installed, download here https://nodejs.org/en/download/, then run:
+4. npm install
+5. npm start
+6. navigate to localhost:3000/ in browser
+- MC
 
 
 // Enhancements TODO: 7/31:
