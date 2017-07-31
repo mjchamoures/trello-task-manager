@@ -79,15 +79,17 @@ class TaskManagerService {
   }
 
   addTask(task) {
+    var createdAt = new Date().toString();
     var newTask = {
       taskId : this.idSequence++,
       title : task.title,
       description : task.description,
       statusId : task.statusId,
-      createdAt : "7/26/17", // TODO use timestamp
-      updatedAt : "7/26/17" // TODO use timestamp
+      createdAt : createdAt,
+      updatedAt : createdAt
 
     }
+
     this.tasks.push(newTask);
 
     return this.tasks;
@@ -96,9 +98,11 @@ class TaskManagerService {
 
   updateTask(task) {
 
+    task.updatedAt = new Date().toString();
+
     for(var i = 0; i < this.tasks.length; i++) {
       if(task.taskId === this.tasks[i].taskId) {
-        this.tasks[i] = task;
+        this.tasks[i] = Object.assign(this.tasks[i], task);
         break;
       }
     }

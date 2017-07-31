@@ -2,7 +2,7 @@
 
 
 import React from 'react';
-import { Col, Row, Panel, Form } from 'react-bootstrap';
+import { Col, Row, Panel, Form, ControlLabel } from 'react-bootstrap';
 
 
 
@@ -23,7 +23,7 @@ class TaskCard extends React.Component {
       <Panel>
 
         <span 
-          className={"glyphicon glyphicon-remove small pull-right"} 
+          className={"glyphicon glyphicon-remove small pull-right aria-hidden='true'"} 
           style={{"cursor" : "pointer", "color" : "red"}}
           onClick={() => this.props.removeTaskClickHandler(this.props.taskId)}>
         </span>
@@ -31,13 +31,18 @@ class TaskCard extends React.Component {
         <h4 style={{ "wordBreak": "break-word" }}> 
           {this.props.title} 
           <span 
-            className={"glyphicon glyphicon-pencil small"} 
+            className={"glyphicon glyphicon-pencil small aria-hidden='true'"} 
             style={{"cursor" : "pointer", "marginLeft": "5px"}}
             onClick={this.editTaskClickHandler}>
           </span>
         </h4>
 
         {this.props.description}
+
+        <div style={{"marginTop" : "10px"}}>
+          <span className={"glyphicon glyphicon-time small pull-left aria-hidden='true'"} style={{"top" : "5px"}}></span>
+          <span className={"small"} style={{"paddingLeft":"5px"}}>{this.props.updatedAt}</span>
+        </div>
       </Panel>
 
     );
