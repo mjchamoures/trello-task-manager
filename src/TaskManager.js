@@ -34,6 +34,7 @@ class TaskManager extends React.Component {
     };
 
     this.saveTaskClickHandler = this.saveTaskClickHandler.bind(this);
+    this.removeTaskClickHandler = this.removeTaskClickHandler.bind(this);
 
   }
 
@@ -55,6 +56,7 @@ class TaskManager extends React.Component {
             statusId={this.props.statusPanels[i].statusId}
             key={this.props.statusPanels[i].statusId}
             saveTaskClickHandler={(task) => this.saveTaskClickHandler(task)}
+            removeTaskClickHandler={this.removeTaskClickHandler}
           />
         </Col>
 
@@ -76,16 +78,28 @@ class TaskManager extends React.Component {
 
   saveTaskClickHandler(task) {
 
-    this.taskManagerService.addTask(task);
+    var newTasks = this.taskManagerService.addTask(task);
 
     this.setState({
-      tasks: this.taskManagerService.getAllTasks()
+      tasks: newTasks
     });
   }
 
-  updateTaskDragDropHandler() {
+  updateTaskDragDropHandler(task) {
+    var newTasks = this.taskManagerService.addTask(task);
 
+    this.setState({
+      tasks: newTasks
+    });
 
+  }
+
+  removeTaskClickHandler(taskId) {
+    var newTasks = this.taskManagerService.removeTask(taskId);
+
+    this.setState({
+      tasks: newTasks
+    });
   }
 
 

@@ -90,6 +90,8 @@ class TaskManagerService {
     }
     this.tasks.push(newTask);
 
+    return this.tasks;
+
   }
 
   updateTask(task) {
@@ -101,7 +103,7 @@ class TaskManagerService {
       }
     }
 
-
+    return this.tasks;
 
   }
 
@@ -110,10 +112,12 @@ class TaskManagerService {
 
     for(var i = 0; i < this.tasks.length; i++) {
       if(taskId === this.tasks[i].taskId) {
-        this.tasks[i].splice(i, 1);
+        this.tasks.splice(i, 1);
         break;
       }
     }
+
+    return this.tasks;
 
   }
 

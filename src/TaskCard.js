@@ -17,17 +17,35 @@ class TaskCard extends React.Component {
 
   render() {
 
-    var cardTitle = (<h4>{this.props.title}</h4>)
-
     return (
 
-      <Panel >
-        {cardTitle}
+      <Panel>
+
+        <span 
+          className={"glyphicon glyphicon-remove small pull-right"} 
+          style={{"cursor" : "pointer", "color" : "red"}}
+          onClick={() => this.props.removeTaskClickHandler(this.props.taskId)}>
+        </span>
+
+        <h4 style={{ "wordBreak": "break-word" }}> 
+          {this.props.title} 
+          <span 
+            className={"glyphicon glyphicon-pencil small"} 
+            style={{"cursor" : "pointer", "marginLeft": "5px"}}
+            onClick={this.testFunc}>
+          </span>
+        </h4>
+
         {this.props.description}
       </Panel>
 
     );
 
+  }
+
+  testFunc() {
+
+    console.log("Dd");
   }
 
 

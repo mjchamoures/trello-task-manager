@@ -6,3 +6,12 @@ npm install
 npm start
 naviagte to localhost:3000/
 -MC
+
+
+// TODO 7/26:
+- Add JQuery UI sortable (https://jqueryui.com/sortable/#connect-lists)
+- Add timestamp to TaskCard
+- Add date during Add service
+- Add remove button to TaskCard
+- Add remove functionality connecting taskcard -> statusPanel -> taskmanager
+- Add navbar

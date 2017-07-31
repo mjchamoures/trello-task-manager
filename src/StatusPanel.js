@@ -29,10 +29,13 @@ class StatusPanel extends React.Component {
     for(var i = 0; i < this.props.tasks.length; i++) {
       var taskCard = (
         <TaskCard
+          taskId={this.props.tasks[i].taskId} 
           title={this.props.tasks[i].title}
           description={this.props.tasks[i].description}
           updatedAt={this.props.tasks[i].updatedAt}
           key={this.props.tasks[i].taskId} 
+          removeTaskClickHandler={(taskId) => this.props.removeTaskClickHandler(taskId)}
+          editTaskClickHandler={() => this.editTaskClickHandler()}
         />
       );
       taskCards.push(taskCard);
