@@ -1,6 +1,6 @@
 Steps to Run:
 
-1. git clone
+1. git clone https://github.com/mjchamoures/trello-task-manager.git
 2. cd trello-task-manager
 3. If node.js is not installed, download here https://nodejs.org/en/download/, then run:
 4. npm install
